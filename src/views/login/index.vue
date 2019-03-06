@@ -19,9 +19,11 @@
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
+import { TweenMax, Expo } from 'gsap'
 import LoginAvatar from '@/assets/login-avatar.svg?inline'
 import { setTimeout } from 'timers';
+
+import anime from 'animejs'
 
 function getPosition(el) {
   let xPos = 0
@@ -106,7 +108,7 @@ export default {
     }
   },
   methods: {
-    calculateFaceMove(e) {
+    calculateFaceMove() {
       let
         carPos = this.theEmail.selectionEnd,
         div = document.createElement('div'),
@@ -125,17 +127,17 @@ export default {
       div.appendChild(span);
 
       if (this.theEmail.scrollWidth <= this.emailScrollMax) {
-        this.caretCoords = getPosition(span);
-        this.dFromC = this.screenCenter - (this.caretCoords.x + this.emailCoords.x);
-        this.eyeLAngle = getAngle(this.eyeLCoords.x, this.eyeLCoords.y, this.emailCoords.x + this.caretCoords.x, this.emailCoords.y + 25);
-        this.eyeRAngle = getAngle(this.eyeRCoords.x, this.eyeRCoords.y, this.emailCoords.x + this.caretCoords.x, this.emailCoords.y + 25);
+        caretCoords = getPosition(span);
+        this.dFromC = this.screenCenter - (caretCoords.x + this.emailCoords.x);
+        this.eyeLAngle = getAngle(this.eyeLCoords.x, this.eyeLCoords.y, this.emailCoords.x + caretCoords.x, this.emailCoords.y + 25);
+        this.eyeRAngle = getAngle(this.eyeRCoords.x, this.eyeRCoords.y, this.emailCoords.x + caretCoords.x, this.emailCoords.y + 25);
         this.noseAngle = getAngle(
           this.noseCoords.x, 
           this.noseCoords.y, 
-          this.emailCoords.x + this.caretCoords.x, 
+          this.emailCoords.x + caretCoords.x, 
           this.emailCoords.y + 25)
         
-        this.mouthAngle = getAngle(this.mouthCoords.x, this.mouthCoords.y, this.emailCoords.x + this.caretCoords.x, this.emailCoords.y + 25);
+        this.mouthAngle = getAngle(this.mouthCoords.x, this.mouthCoords.y, this.emailCoords.x + caretCoords.x, this.emailCoords.y + 25);
       } else {
         this.eyeLAngle = getAngle(this.eyeLCoords.x, this.eyeLCoords.y, this.emailCoords.x + this.emailScrollMax, this.emailCoords.y + 25);
         this.eyeRAngle = getAngle(this.eyeRCoords.x, this.eyeRCoords.y, this.emailCoords.x + this.emailScrollMax, this.emailCoords.y + 25);
@@ -257,14 +259,28 @@ export default {
         delay = 1
       }
       const self = this
-      this.blinking = TweenMax.to([this.eyeL, this.eyeR], .1, {
-        delay: delay, 
-        scaleY: 0, 
-        yoyo: true, 
-        repeat: 1, 
-        transformOrigin: "center center", 
-        onComplete: () => self.startBlinking(12)
+
+      anime({
+        targets: [this.eyeL, this.eyeR],
+        delay: delay*1000,
+        duration: 100,
+        scaleY: 0,
+        direction: 'alternate', // yoyo
+        transformOrigin: ['50px 80px 0', '50px 80px 0'], //  transformOrigin: "center center",
+        loop: 1, // repeat
+        easing: 'linear',
+        complete: () => {
+          self.startBlinking(12)
+        }
       })
+      // this.blinking = TweenMax.to([this.eyeL, this.eyeR], .1, {
+      //   delay: delay/10, 
+      //   scaleY: 0, 
+      //   yoyo: true, 
+      //   repeat: 1, 
+      //   transformOrigin: "center center",
+      //   onComplete: () => self.startBlinking(12)
+      // })
     },
     stopBlinking() {
       this.blinking.kill()
@@ -310,7 +326,13 @@ export default {
       y: this.svgCoords.y + 100
     }
 
-    TweenMax.set(this.mouth, { transformOrigin: "center center" });
+    // TweenMax.set(this.mouth, { transformOrigin: "center center" });
+    this.mouth.transformOrigin = 'center center'
+    anime({
+      target: '.mouth',
+      transformOrigin: 'center center'
+    })
+    // console.log(this.mouth)
 
     // activate blinking
     this.startBlinking(5);

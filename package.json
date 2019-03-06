@@ -12,6 +12,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "animejs": "^3.0.1",
     "element-ui": "^2.3.6",
     "gsap": "^2.1.2",
     "js-cookie": "^2.2.0",

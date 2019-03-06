@@ -1,0 +1,13 @@
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "gaconkzk",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "discovery-channel": "^5.5.1",
+    "hash-of-stream": "^1.0.0",
+    "pump": "^3.0.0"
+  }
+}

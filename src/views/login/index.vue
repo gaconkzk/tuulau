@@ -93,6 +93,9 @@ export default {
       eyeR: null,
       nose: null,
       mouth: null,
+      mouthBG: null,
+      mouthOutline: null,
+      mouthMaskPath: null,
       chin: null,
       face: null,
       eyebrow: null,
@@ -222,6 +225,16 @@ export default {
         if (this.mouthStatus === 'small') {
           this.mouthStatus = 'medium';
           // TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, { morphSVG: mouthMediumBG, shapeIndex: 8, ease: Expo.easeOut });
+          anime({
+            targets: [this.mouthBG, this.mouthOutline, this.mouthMaskPath],
+            d: [
+              {
+                value: 'M95,104.2c-4.5,0-8.2-3.7-8.2-8.2v-2c0-1.2,1-2.2,2.2-2.2h22c1.2,0,2.2,1,2.2,2.2v2 c0,4.5-3.7,8.2-8.2,8.2H95z'
+              }
+            ],
+            duration: 1000,
+            easing: 'easeOutExpo'
+          })
           TweenMax.to(this.tooth, 1, { x: 0, y: 0, ease: Expo.easeOut });
           TweenMax.to(this.tongue, 1, { x: 0, y: 1, ease: Expo.easeOut });
           TweenMax.to([this.eyeL, this.eyeR], 1, { scaleX: .85, scaleY: .85, ease: Expo.easeOut });
@@ -266,7 +279,7 @@ export default {
         duration: 100,
         scaleY: 0,
         direction: 'alternate', // yoyo
-        transformOrigin: ['50px 80px 0', '50px 80px 0'], //  transformOrigin: "center center",
+        transformOrigin: ['0px 82px 0', '0px 82px 0'], //  transformOrigin: "center center",
         loop: 1, // repeat
         easing: 'linear',
         complete: () => {
@@ -295,6 +308,9 @@ export default {
     this.eyeR = document.querySelector('.eyeR')
     this.nose = document.querySelector('.nose')
     this.mouth = document.querySelector('.mouth')
+    this.mouthBG = document.querySelector('.mouthBG')
+    this.mouthOutline = document.querySelector('.mouthOutline')
+    this.mouthMaskPath = document.querySelector('.mouthMaskPath')
     this.chin = document.querySelector('.chin')
     this.face = document.querySelector('.face')
     this.eyebrow = document.querySelector('.eyebrow')

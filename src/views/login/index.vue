@@ -56,7 +56,7 @@
         v-model="auth.email"
       )
     label
-      fai.fa(icon="comment")
+      fai.fa(:icon="['far', 'comment']")
       input.password(:type='passwordType'
         autocomplete='off'
         placeholder='@v3ry_cO0l_p44s!l'
@@ -65,17 +65,18 @@
         @blur="onPasswordBlur"
         v-model="auth.password"
       )
-      button.password-button(@click.prevent="onShowPasswordClick") {{this.passwordType==='text' ? 'hide' : 'show'}}
+      button.password-button(@click.prevent="onShowPasswordClick")
+        fai(:icon="passwordType==='password' ? 'eye' : 'eye-slash'")
 
     button.login-button Login
 
   .social-buttons
     .social
-      .fa.fa-wechat
+      fai.fa(:icon="['fab', 'google']")
     .social
-      .fa.fa-weibo
+      fai.fa(:icon="['fab', 'facebook']")
     .social
-      .fa.fa-paw
+      fai.fa(:icon="['fab', 'github']")
 
   .footer The Flies
 
@@ -134,10 +135,10 @@ export default {
       this.handHide = false
       this.handPeek = false
     },
-    onEmailInput(e) {
+    onEmailInput() {
       this.faceFocus = true
     },
-    onEmailBlur(e) {
+    onEmailBlur() {
       this.faceFocus = false
     },
     onPasswordFocus() {

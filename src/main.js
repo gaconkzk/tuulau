@@ -11,6 +11,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import './styles/index.styl' // global stylus
 
+import './plugins/fontawesome'
+
 import i18n from './lang'
 
 import * as filters from './filters'

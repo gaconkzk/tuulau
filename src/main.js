@@ -7,6 +7,9 @@ import './registerServiceWorker'
 
 import './plugins/element-ui'
 import './plugins/fontawesome'
+import './plugins/firebase'
+
+import './permission'
 
 import i18n from './lang'
 

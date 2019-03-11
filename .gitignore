@@ -22,3 +22,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+**/firebase-debug.log
+**/secrets.json
+**/*.bak
+.firebase
+.firebaserc

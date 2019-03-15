@@ -53,7 +53,7 @@
           @focus="onEmailFocus"
           @input="throttle(onEmailInput, 100)"
           @blur="onEmailBlur"
-          v-model="auth.email"
+          v-model="auth.username"
         )
       label
         fai.fa(:icon="['far', 'comment']")
@@ -86,7 +86,11 @@
 
 <script>
 import throttle from 'lodash/throttle'
-import { setTimeout } from 'timers';
+import firebase from 'firebase/app'
+
+import { mapActions } from 'vuex'
+
+import('firebase/auth')
 
 export default {
   data() {
@@ -131,6 +135,7 @@ export default {
   },
   methods: {
     throttle,
+    ...mapActions(['setAuth']),
     onEmailFocus() {
       this.faceFocus = true
       this.handHide = false
@@ -170,8 +175,14 @@ export default {
       this.$refs.password.focus()
     },
     login() {
-      // TODO stop after done
-      // setTimeout(() => loading.close(), 2000)
+      firebase.auth()
+        .signInWithEmailAndPassword(this.auth.username, this.auth.password)
+        .then(() => {
+          this.$router.replace('/')
+        })
+        .catch(() => {
+          this.setAuth({ username: null })
+        })
     }
   }
 }

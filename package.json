@@ -26,6 +26,7 @@
     "nprogress": "^0.2.0",
     "register-service-worker": "^1.5.2",
     "vue": "^2.6.6",
+    "vue-body-class": "^2.0.0-beta.2",
     "vue-i18n": "^8.0.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -47,6 +48,8 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-element-ui": "^1.1.4",

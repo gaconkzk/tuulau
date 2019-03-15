@@ -4,7 +4,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import Cookies from 'js-cookie'
 
-import '../styles/index.styl' // global stylus
+// import '../styles/landed/sass/main.scss' // global stylus
 import i18n from '../lang'
 
 Vue.use(ElementUI, {

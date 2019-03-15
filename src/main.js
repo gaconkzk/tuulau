@@ -1,4 +1,7 @@
 import Vue from 'vue'
+import vbclass from 'vue-body-class'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 import App from './App.vue'
 import router from './router'
@@ -19,11 +22,18 @@ Object.keys(filters).forEach(k => {
   Vue.filter(k, filters[k])
 })
 
+Vue.use(vbclass, router)
+
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App)
-}).$mount('#app')
+let app = null
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      i18n,
+      render: h => h(App)
+    }).$mount('#app')    
+  }
+})

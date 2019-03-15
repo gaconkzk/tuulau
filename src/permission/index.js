@@ -2,34 +2,31 @@ import NProgress from 'nprogress'
 
 import router from '@/router'
 
+import firebase from '@/plugins/firebase'
+
 import 'nprogress/nprogress.css'
 
 NProgress.configure({showSpinner: false})
 
-function sleep(ms) {
-  return new Promise(res => setTimeout(res, ms))
-}
-
-async function wait(ms) {
-  console.log(`wait ${ms}`)
-  await sleep(ms)
-  console.log('wake up')
-}
-
-// permission judge function
-// function hasPermission(roles, permissionRoles) {
-//   if (roles.indexOf('admin') >= 0) return true
-
-//   if (!permissionRoles) return true
-
-//   return roles.some(role => permissionRoles.indexOf(role) >= 0)
-// }
+const excludeList = ['/login', '/register', '/404']
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
-
-  wait(2000)
-    .then(() => next())
+  const currentUser = firebase.auth().currentUser
+  if (currentUser) {
+    if (to.path === '/login') {
+      router.replace('/')
+    } else {
+      // TODO get roles
+      next()
+    }
+  } else {
+    if (excludeList.indexOf(to.path)>=0) {
+      next()
+    } else {
+      next(`/login?redirect=${to.path}`)
+    }
+  }
 })
 
 router.afterEach(() => NProgress.done())

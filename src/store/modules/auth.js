@@ -5,7 +5,6 @@ const auth = {
 
   mutations: {
     SET_AUTH: (state, auth) => {
-      console.log('called', auth)
       state.username = auth.username
     }
   },
